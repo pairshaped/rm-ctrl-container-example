@@ -1,2 +1,0 @@
-class ContainerController < UIViewController
-end
