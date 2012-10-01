@@ -5,18 +5,26 @@ class ListController < UIViewController
   def init
     if super
       @questions = [
-        Question.new( body: "What does hipster mean to you?",
+        Question.new( body: "Although there are several interpretations, what is universally accepted to be the Olympic motto?",
                       answers: [
-                        Answer.new(body: '20 something in skinny jeans.', votes: 0),
-                        Answer.new(body: 'Definitions are so mainstream.', votes: 0),
-                        Answer.new(body: 'No one says "Hipster" anymore...', votes: 0),
-                        Answer.new(body: 'Someone who works at Github.', votes: 0)
+                        Answer.new(body: 'Slower, Lower, Weaker', votes: 0),
+                        Answer.new(body: 'Hastier, Further, Longer', votes: 0),
+                        Answer.new(body: 'Faster, Further, Braver', votes: 0),
+                        Answer.new(body: 'Faster, Higher, Stronger', votes: 0)
                       ] ),
-        Question.new( body: 'LOL...',
+        Question.new( body: 'At which Summer Games was the Olympic flag flown for the first time?',
                       answers: [
-                        Answer.new(body: 'Laugh Out Loud', votes: 0),
-                        Answer.new(body: 'Cat', votes: 0),
-                        Answer.new(body: 'IPOP', votes: 0)
+                        Answer.new(body: 'Athens 1896', votes: 0),
+                        Answer.new(body: 'London 1908', votes: 0),
+                        Answer.new(body: 'Antwerp 1920', votes: 0),
+                        Answer.new(body: 'Berlin 1936', votes: 0)
+                      ] ),
+        Question.new( body: 'How far can you see when you are at the top of the London Eye?',
+                      answers: [
+                        Answer.new(body: '40 km (to Windsor Castle)', votes: 0),
+                        Answer.new(body: '15 km (the edge of London)', votes: 0),
+                        Answer.new(body: 'In the London fog, about 1m!', votes: 0),
+                        Answer.new(body: '100 km (to the White Cliffs of Dover)', votes: 0)
                       ] )
       ]
     end
