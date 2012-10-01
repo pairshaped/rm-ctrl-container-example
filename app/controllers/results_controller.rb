@@ -9,8 +9,4 @@ class ResultsController < UIViewController
 
   end
 
-  def viewWillAppear
-    p "viewWillAppear"
-  end
-
 end
