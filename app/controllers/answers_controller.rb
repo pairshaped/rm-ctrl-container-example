@@ -10,9 +10,9 @@ class AnswersController < UIViewController
   layout do
     @question.answers.each_with_index do |answer, idx|
       button = subview(UIButton.buttonWithType(UIButtonTypeRoundedRect),
-        frame: [[20, (60 * (idx + 1))], [280, 40]],
+        frame: [[20, (60 * idx) + 20], [280, 40]],
         title: answer.body,
-        tag: (idx + 1))
+        tag: idx)
 
       button.addTarget(self, action:'answerSelected:', forControlEvents: UIControlEventTouchUpInside)
     end

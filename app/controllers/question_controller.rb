@@ -31,10 +31,7 @@ class QuestionController < UIViewController
       results_view = subview(@results_controller.view,
         left: 320, top: 0,
         backgroundColor: UIColor.blueColor)
-      results_view.layoutIfNeeded # Forces layout so we can get an actual height.
-      #results_view = subview(@results_controller.view)
-      #results_view.layoutIfNeeded # Forces layout so we can get an actual height.
-      #@results_height = results_view.frame.size.height
+      results_view.layoutIfNeeded
 
     end
     @child_container.frame = [[0, 70], [320, @answers_height]]
@@ -44,6 +41,7 @@ class QuestionController < UIViewController
   def answerSelected(number)
     p "parent answerSelected: #{number}"
     @results_controller.answer = @question.answers[number]
+    p @results_controller.answer
 
     width = @child_container.frame.size.width
     height = @child_container.frame.size.height
