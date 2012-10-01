@@ -11,19 +11,26 @@ class QuestionController < UIViewController
     self.view.backgroundColor = UIColor.grayColor
 
     subview(UILabel,
-      frame: [[20, 10], [280, 40]],
+      frame: [[20, 10], [280, 80]],
       numberOfLines: 0,
       text: @question.body,
       backgroundColor: UIColor.clearColor)
 
-    @child_container = subview(UIView) do
+    @container = subview(UIScrollView,
+      left: 0, top: 90,
+      width: 320, height: 326) do
 
-      @answers_controller = AnswersController.alloc.initWithQuestion(@question)
+      @answers_controller = AnswersController.alloc.initWithAnswers(@question.answers)
       addChildViewController(@answers_controller)
       answers_view = subview(@answers_controller.view,
         left: 0, top: 0,
         backgroundColor: UIColor.greenColor)
       answers_view.layoutIfNeeded # Forces layout so we can get an actual height.
+
+      # Enforce the minimum height of the container.
+      if answers_view.frame.size.height < 326
+        answers_view.frame = [[answers_view.frame.origin.x, answers_view.frame.origin.y], [answers_view.frame.size.width, 326]]
+      end
       @answers_height = answers_view.frame.size.height
 
       @results_controller = ResultsController.alloc.init
@@ -32,26 +39,28 @@ class QuestionController < UIViewController
         left: 320, top: 0,
         backgroundColor: UIColor.blueColor)
       results_view.layoutIfNeeded
-
+      # It's OK to go bigger on the transition, but going smaller just looks wierd.
+      if @answers_height > results_view.frame.size.height
+        results_view.frame = [[results_view.frame.origin.x, results_view.frame.origin.y], [results_view.frame.size.width, @answers_height]]
+      end
+      @results_height = results_view.frame.size.height
     end
-    @child_container.frame = [[0, 70], [320, @answers_height]]
-
+    @container.contentSize = [320, @answers_height]
   end
 
   def answerSelected(number)
-    p "parent answerSelected: #{number}"
     @results_controller.answer = @question.answers[number]
-    p @results_controller.answer
 
-    width = @child_container.frame.size.width
-    height = @child_container.frame.size.height
-
+    width = 320
+    height = @results_height
+    @container.contentSize = [width, height]
+    
     self.transitionFromViewController(@answers_controller, 
       toViewController: @results_controller, 
       duration: 0.5, 
       options: UIViewAnimationOptionTransitionNone, 
       animations: lambda {
-        @answers_controller.view.frame = CGRectMake(0 - width, 0, width, height);
+        # @answers_controller.view.frame = CGRectMake(0 - width, 0, width, height);
         @results_controller.view.frame = CGRectMake(0, 0, width, height);
       }, 
       completion:nil)
